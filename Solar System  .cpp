@@ -16,11 +16,11 @@ float Inc = 0.0;
 float orbit = 0.0;
 //angleSun
 float  angleSun[9] = { 0.2376, 0.6075, 1, 1.8694, 12, 29, 84, 165, 248 };
-//angleY - dore khodesh 
+//angleY - around the sun
 float  angleY[9] = { 59.0, 243, 1, 1.02, 0.38, 0.41, 0.43, 0.63, 6.16 };
-//fasele ha
+//distance
 float  dist[9] = { 1.0, 1.89, 2.63, 4.0, 13.66, 25.0, 50.52, 78.94, 103.50 };
-//ghotr
+//diameter
 float  red[9] = { 0.202, 0.516, 0.538, 0.286, 5.991, 4.978, 2.109, 2.278, 0.1 };
 //color
 
@@ -32,38 +32,36 @@ float q = 0.0, w = 0.0, e =0.0 , r =0;
 
 
 
-			
+
 void lighting()
 {
 
-	
+
 	//glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse_color);
-	
+
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
-	
+
 }
 
 /*
 void drawSphereMoon(float distance, float reduis, float angleY, float angleSun, float rot){
 	//earth
-	//dore khorshid	
+	//around the sun
 	glRotatef(xl, 0.0, 0.0, 1.0);
 	glRotatef(angleSun + rot, 0.0, 0.0, 1.0);
 
 	glTranslatef(distance, 0.0, 0.0);
-	//dore khodesh
+	//around the sun
 	glRotatef(angleY, 0.0, 0.0, 1.0);
 	//color
 	glColor3f(0.0,0.0,1.0);
 	//glutSolidSphere(reduis, 30, 30);
 	glutWireSphere(reduis, 30, 30);
-	//glutSolidSphere(reduis, 30, 30);
-
 
 	//Draw moon
 	orbit += 1;
@@ -71,19 +69,17 @@ void drawSphereMoon(float distance, float reduis, float angleY, float angleSun, 
 	glTranslatef(2.63 + 0.0067, 0.0, 0.0);
 	glColor3f(1.0, 1.0, 1.0);
 	glutSolidSphere(0.145, 10, 10);
-
-
 }*/
 void drawSphere(float distance, float reduis, float angleY, float angleSun, float rot, int i){
 	//earth
-	//dore khorshid	
+	//dore khorshid
 	GLfloat light_ambient_color[] = { 0.5, 0.5, 0.5, 0.5 };
 	glMaterialfv(GL_FRONT, GL_AMBIENT, light_ambient_color);
 	glRotatef(xl, 0.0, 0.0, 1.0);
 	glRotatef(angleSun , 0.0, 0.0, 1.0);
 
 	glTranslatef(distance, 0.0, 0.0);
-	//dore khodesh
+	//arounf the sun
 	glRotatef(angleY, 0.0, 0.0, 1.0);
 	//color
 	glColor3f(colorR[i], colorG[i], colorB[i]);
@@ -103,14 +99,11 @@ void drawsun(){
 
 }
 void Display(){
-
-	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	//********************************************************************
 	// Reset transformations
 	GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };
-	
+
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	//glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient_color);
 	glEnable(GL_LIGHT0);
@@ -121,13 +114,11 @@ void Display(){
 
 	if (t > 360 || t < -360)
 		t = t / 360;
-	
+
 	//lighting();
-	
 	// ***************************************************************
 	float sum = 58.6;
 	Inc= Inc +1;
-//	int i = 2;
 	for (int i = 0; i < 9; i++){
 		sum += dist[i] * 2;
 		glPushMatrix();
@@ -156,7 +147,6 @@ void releaseSpecialKey(int key, int x, int y)
 	switch (key) {
 	case GLUT_KEY_UP: x = x; break;
 	case GLUT_KEY_DOWN: x = x; break;
-
 	}
 }
 void init(){
@@ -177,13 +167,9 @@ static void ResizeWindow(int w, int h)
 	glViewport(0, 0, w, h);
 	aspectRatio = (float)w / (float)h;
 
-
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
 	gluPerspective(90.0, aspectRatio, 1, 10000000000);
-
-
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -197,7 +183,7 @@ int main(int argc, char **argv){
 	glutCreateWindow("My Solar System");
 
 	init();
-
+	
 	glutDisplayFunc(Display);
 	glutReshapeFunc(ResizeWindow);
 	glutSpecialFunc(pressSpecialKey);
@@ -207,4 +193,3 @@ int main(int argc, char **argv){
 	return 0;
 
 }
-
